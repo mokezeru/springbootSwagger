@@ -1,9 +1,13 @@
 package com.charter.springbootSwagger.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employees")
+@ApiModel(value="Employee Model", description="Employee model for the documentation")
 public class Employee {
     private long id;
     private String firstName;
@@ -39,6 +43,7 @@ public class Employee {
         this.lastName = lastName;
     }
     @Column(name = "email_address", nullable = false)
+    @ApiModelProperty(value = "Email Address of the Employee", allowableValues = "mzeru@yahoo.com, mzeru@gmail.com, mzeru@hotmail.com")
     public String getEmailId() {
         return emailId;
     }

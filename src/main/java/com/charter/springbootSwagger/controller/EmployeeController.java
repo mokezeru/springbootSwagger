@@ -2,10 +2,10 @@ package com.charter.springbootSwagger.controller;
 
 import com.charter.springbootSwagger.exception.ResourceNotFoundException;
 import com.charter.springbootSwagger.model.Employee;
-import com.charter.springbootSwagger.repository.EmployeeRepository;
 import com.charter.springbootSwagger.service.EmployeeService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
-@Api(value = "Employee Management System", description = "Operations pertaining to employee in Employee Management System")
+@Api(value = "/api/v1", description = "Operations pertaining to employee in Employee Management System", consumes="application/json, application/xml")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @ApiOperation(value = "View a list of available employees", response = List.class)
+    @ApiOperation(httpMethod = "GET",
+            value = "View a list of available employees",
+            notes = "Multiple Employees can be returned with comma separated values",
+            response = List.class,
+            nickname="getEmployee")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -29,13 +33,13 @@ public class EmployeeController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
     @GetMapping("/employees")
-    public List < Employee > getAllEmployees() {
-        return employeeService.listAllEmployee();
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        return new ResponseEntity<>(employeeService.listAllEmployee(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get an employee by Id")
     @GetMapping("/employees/{id}")
-    public ResponseEntity < Employee > getEmployeeById(
+    public ResponseEntity <Employee> getEmployeeById(
             @ApiParam(value = "Employee id from which employee object will retrieve", required = true) @PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
         Employee employee = employeeService.findEmployee(employeeId);
