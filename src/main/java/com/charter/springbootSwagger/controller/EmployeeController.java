@@ -57,7 +57,7 @@ public class EmployeeController {
 
     @ApiOperation(value = "Update an employee")
     @PutMapping("/employees/{id}")
-    public ResponseEntity < Employee > updateEmployee(
+    public ResponseEntity <Employee> updateEmployee(
             @ApiParam(value = "Employee Id to update employee object", required = true) @PathVariable(value = "id") Long employeeId,
             @ApiParam(value = "Update employee object", required = true) @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
         Employee employee = employeeService.findEmployee(employeeId);
@@ -72,14 +72,14 @@ public class EmployeeController {
 
     @ApiOperation(value = "Delete an employee")
     @DeleteMapping("/employees/{id}")
-    public Map < String, Boolean > deleteEmployee(
-            @ApiParam(value = "Employee Id from which employee object will delete from database table", required = true) @PathVariable(value = "id") Long employeeId)
+    public Map <String, Boolean> deleteEmployee(
+            @ApiParam(value = "The Id of the Employee that is going to be deleted from database table", required = true) @PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
         Employee employee = employeeService.findEmployee(employeeId);
         if(employee==null)
             throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
         employeeService.deleteEmployee(employee);
-        Map < String, Boolean > response = new HashMap < > ();
+        Map <String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
     }
