@@ -44,7 +44,7 @@ public class EmployeeController {
             throws ResourceNotFoundException {
         Employee employee = employeeService.findEmployee(employeeId);
         if(employee == null)
-            throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
+            throw new ResourceNotFoundException("Employee not found for this id : " + employeeId);
         return ResponseEntity.ok().body(employee);
     }
 
@@ -62,7 +62,7 @@ public class EmployeeController {
             @ApiParam(value = "Update employee object", required = true) @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
         Employee employee = employeeService.findEmployee(employeeId);
         if(employee == null)
-                throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
+                throw new ResourceNotFoundException("Employee not found for this id : " + employeeId);
         employee.setEmailId(employeeDetails.getEmailId());
         employee.setLastName(employeeDetails.getLastName());
         employee.setFirstName(employeeDetails.getFirstName());

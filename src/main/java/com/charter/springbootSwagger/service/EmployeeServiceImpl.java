@@ -20,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEmployee(Long Id) {
-        return  employeeRepository.findById(Id).get();
+        return  employeeRepository.findById(Id).orElse(null);
     }
 
     @Override
