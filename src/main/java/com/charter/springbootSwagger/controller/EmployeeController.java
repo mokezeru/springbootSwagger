@@ -80,7 +80,7 @@ public class EmployeeController {
             throw new ResourceNotFoundException("Employee not found for this id :: " + employeeId);
         employeeService.deleteEmployee(employee);
         Map <String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
+        response.put(employee +" is deleted", Boolean.TRUE);
         return response;
     }
 }
